@@ -1,18 +1,15 @@
 import photoGet from "@/actions/photo-get";
 import PhotoContent from "@/components/photo/photo-content";
 import { notFound } from "next/navigation";
-import { PageProps } from "../../../../.next/types/app/layout";
 
-type FotoIdParams = {
+type PageProps = {
   params: {
     id: string;
   };
 };
 
 export async function generateMetadata({ params }: PageProps) {
-  const {
-    params: { id },
-  } = (await params) as FotoIdParams;
+  const { id } = await params;
   const { data } = await photoGet(id);
 
   if (!data) return { title: "Fotos" };
@@ -22,9 +19,7 @@ export async function generateMetadata({ params }: PageProps) {
 }
 
 export default async function FotoIdPage({ params }: PageProps) {
-  const {
-    params: { id },
-  } = (await params) as FotoIdParams;
+  const { id } = await params;
   const { data } = await photoGet(id);
 
   if (!data) return notFound();
