@@ -1,14 +1,14 @@
 import photosGet from "@/actions/photos-get";
 import Feed from "@/components/feed/feed";
 
-type PageProps = {
-  params: {
+type Props = {
+  params: Promise<{
     user: string;
-  };
+  }>;
 };
 
-export default async function PerfilUserPage({ params }: PageProps) {
-  const { user } = await params;
+export default async function PerfilUserPage({ params }: Props) {
+  const user = (await params).user;
   const { data } = await photosGet({ user: user });
 
   if (!data) return null;
