@@ -1,6 +1,7 @@
 import photoGet from "@/actions/photo-get";
 import FeedModal from "@/components/feed/feed-modal";
 import { notFound } from "next/navigation";
+import { PageProps } from "../../../../../.next/types/app/layout";
 
 type FotoIdParams = {
   params: {
@@ -8,8 +9,10 @@ type FotoIdParams = {
   };
 };
 
-export async function generateMetadata({ params }: FotoIdParams) {
-  const { id } = await params;
+export async function generateMetadata({ params }: PageProps) {
+  const {
+    params: { id },
+  } = (await params) as FotoIdParams;
   const { data } = await photoGet(id);
 
   if (!data) return { title: "Fotos" };
@@ -18,8 +21,10 @@ export async function generateMetadata({ params }: FotoIdParams) {
   };
 }
 
-export default async function FotoIdPage({ params }: FotoIdParams) {
-  const { id } = await params;
+export default async function FotoIdPage({ params }: PageProps) {
+  const {
+    params: { id },
+  } = (await params) as FotoIdParams;
   const { data } = await photoGet(id);
 
   if (!data) return notFound();
